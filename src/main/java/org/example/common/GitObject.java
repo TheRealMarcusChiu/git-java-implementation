@@ -6,10 +6,16 @@ import lombok.SneakyThrows;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.Comparator;
 
 @Data
 @NoArgsConstructor
 public class GitObject {
+
+    public static final Comparator<GitObject> BY_WORKING_RELATIVE_PATH = Comparator.comparing(
+            GitObject::getWorkingRelativePath,
+            String::compareTo
+    );
 
     private File file;
     private String sha1;
