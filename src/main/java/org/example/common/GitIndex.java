@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class GitIndex {
 
@@ -72,6 +73,6 @@ public class GitIndex {
 
     @Data
     private static class Index {
-        private Map<String, String> keyValuePairs = new HashMap<>();
+        private Map<String, String> keyValuePairs = new TreeMap<>();
     }
 }

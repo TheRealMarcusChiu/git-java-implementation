@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c190c096-d390-4530-9005-5588205e2478" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/commands/GitAddImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/commands/GitAddImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/common/GitIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/common/GitIndex.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

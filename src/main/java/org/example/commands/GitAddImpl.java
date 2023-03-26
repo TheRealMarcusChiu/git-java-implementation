@@ -25,7 +25,6 @@ public class GitAddImpl {
 
         getAllWorkingFiles(rootProjectPath).stream()
                 .map(file -> GitObject.fromWorking(file, rootProjectPath))
-                .sorted(GitObject.BY_WORKING_RELATIVE_PATH)
                 .forEach(gitObject -> {
                     gitIndex.update(gitObject);
                     gitObjects.save(gitObject);
