@@ -1,5 +1,6 @@
 package org.example.commands;
 
+import org.example.common.GitIgnore;
 import org.example.common.GitIndex;
 import org.example.common.GitObject;
 import org.example.common.GitObjects;
@@ -8,15 +9,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.Main.GIT_REPO_NAME;
-
 public class GitAddImpl {
-
-    private static final List<String> FILE_NAMES_TO_IGNORE = List.of(
-            ".git",
-            GIT_REPO_NAME,
-            "target"
-    );
 
     public void process(final String gitDirectoryPath,
                         final String rootProjectPath) {
@@ -40,7 +33,7 @@ public class GitAddImpl {
         List<File> directories = new ArrayList<>();
 
         for (File fileAndDirectory : fileAndDirectories) {
-            if (!FILE_NAMES_TO_IGNORE.contains(fileAndDirectory.getName())) {
+            if (!GitIgnore.get().contains(fileAndDirectory.getName())) {
                 if (fileAndDirectory.isFile()) {
                     files.add(fileAndDirectory);
                 } else if (fileAndDirectory.isDirectory()) {
