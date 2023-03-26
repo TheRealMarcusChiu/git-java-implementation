@@ -12,7 +12,10 @@ public class Main {
     public static final String GIT_DIRECTORY_PATH = System.getProperty("user.dir") + "/" + GIT_REPO_NAME;
 
     public static void main(String[] args) throws IOException {
-        String arg = "init";
+        String arg = args[0];
+
+        System.out.println("input arg is " + arg);
+        System.out.println("user directory " + USER_DIRECTORY_PATH);
 
         if ("init".equals(arg)) {
             new GitInitImpl().init(GIT_DIRECTORY_PATH);
