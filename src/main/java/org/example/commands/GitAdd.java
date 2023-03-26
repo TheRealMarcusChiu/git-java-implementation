@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GitAddImpl {
+public class GitAdd {
 
     public void process(final String gitDirectoryPath,
                         final String rootProjectPath) {

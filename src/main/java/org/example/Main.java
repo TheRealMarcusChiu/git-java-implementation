@@ -1,7 +1,7 @@
 package org.example;
 
-import org.example.commands.GitAddImpl;
-import org.example.commands.GitInitImpl;
+import org.example.commands.GitAdd;
+import org.example.commands.GitInit;
 
 import java.io.IOException;
 
@@ -15,9 +15,9 @@ public class Main {
         String arg = args[0];
 
         if ("init".equals(arg)) {
-            new GitInitImpl().init(GIT_DIRECTORY_PATH);
+            new GitInit().init(GIT_DIRECTORY_PATH);
         } else if ("add".equals(arg)) {
-            new GitAddImpl().process(GIT_DIRECTORY_PATH, USER_DIRECTORY_PATH);
+            new GitAdd().process(GIT_DIRECTORY_PATH, USER_DIRECTORY_PATH);
         }
     }
 }

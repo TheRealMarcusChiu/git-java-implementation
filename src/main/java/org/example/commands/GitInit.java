@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class GitInitImpl {
+public class GitInit {
 
     public void init(final String gitDirectoryPath) throws IOException {
         File file = new File(gitDirectoryPath);
