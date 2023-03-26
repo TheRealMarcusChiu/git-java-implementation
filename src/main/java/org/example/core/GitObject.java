@@ -1,4 +1,4 @@
-package org.example.common;
+package org.example.core;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,6 @@
-package org.example.common;
+package org.example.core;
 
 import lombok.SneakyThrows;
-import org.example.commands.GitAddImpl;
 
 import java.io.File;
 import java.nio.file.Files;

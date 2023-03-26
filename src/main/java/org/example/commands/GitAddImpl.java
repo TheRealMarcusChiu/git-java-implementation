@@ -1,9 +1,9 @@
 package org.example.commands;
 
-import org.example.common.GitIgnore;
-import org.example.common.GitIndex;
-import org.example.common.GitObject;
-import org.example.common.GitObjects;
+import org.example.core.GitIgnore;
+import org.example.core.GitIndex;
+import org.example.core.GitObject;
+import org.example.core.GitObjects;
 
 import java.io.File;
 import java.util.ArrayList;
