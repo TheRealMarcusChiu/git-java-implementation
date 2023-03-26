@@ -12,6 +12,12 @@ import static org.example.Main.GIT_REPO_NAME;
 
 public class GitAddImpl {
 
+    private static final List<String> FILE_NAMES_TO_IGNORE = List.of(
+            ".git",
+            GIT_REPO_NAME,
+            "target"
+    );
+
     public void process(final String gitDirectoryPath,
                         final String rootProjectPath) {
         GitIndex gitIndex = new GitIndex(gitDirectoryPath);
@@ -34,12 +40,12 @@ public class GitAddImpl {
         List<File> directories = new ArrayList<>();
 
         for (File fileAndDirectory : fileAndDirectories) {
-            if (fileAndDirectory.getName().equals(GIT_REPO_NAME)) {
-                break;
-            } else if (fileAndDirectory.isFile()) {
-                files.add(fileAndDirectory);
-            } else if (fileAndDirectory.isDirectory()) {
-                directories.add(fileAndDirectory);
+            if (!FILE_NAMES_TO_IGNORE.contains(fileAndDirectory.getName())) {
+                if (fileAndDirectory.isFile()) {
+                    files.add(fileAndDirectory);
+                } else if (fileAndDirectory.isDirectory()) {
+                    directories.add(fileAndDirectory);
+                }
             }
         }
 

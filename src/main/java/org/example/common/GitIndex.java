@@ -42,7 +42,7 @@ public class GitIndex {
         try (BufferedReader br = new BufferedReader(new FileReader(indexFile))) {
             String line;
             while ((line = br.readLine()) != null) {
-                int lastDelimiterIndex = line.lastIndexOf("/");
+                int lastDelimiterIndex = line.lastIndexOf(" ");
                 String key = line.substring(0, lastDelimiterIndex);
                 String value = line.substring(lastDelimiterIndex + 1);
 
