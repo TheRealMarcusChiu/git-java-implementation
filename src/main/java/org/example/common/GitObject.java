@@ -18,10 +18,10 @@ public class GitObject {
 
     @SneakyThrows
     public static GitObject fromWorking(final File workingFile,
-                                        final String rootPath) {
+                                        final String rootProjectPath) {
         GitObject gitObject = new GitObject();
 
-        String relativePath = workingFile.getAbsolutePath().replace(rootPath, "");
+        String relativePath = workingFile.getAbsolutePath().replace(rootProjectPath, "");
         byte[] byteArray = Files.readAllBytes(workingFile.toPath());
         String sha1 = GitSha1.toSHA1(byteArray);
 

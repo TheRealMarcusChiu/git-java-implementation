@@ -40,6 +40,10 @@ public class GitObjects {
 
     @SneakyThrows
     public void save(final GitObject gitObject) {
+        if (findBySha1(gitObject.getSha1()).isPresent()) {
+            return;
+        }
+
         String sha1 = gitObject.getSha1();
 
         String firstPart = sha1.substring(0, 2);

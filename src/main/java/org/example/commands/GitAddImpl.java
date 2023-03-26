@@ -1,7 +1,10 @@
 package org.example.commands;
 
+import org.example.common.GitIndex;
+import org.example.common.GitObject;
+import org.example.common.GitObjects;
+
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +13,21 @@ import static org.example.Main.GIT_REPO_NAME;
 public class GitAddImpl {
 
     public void process(final String gitDirectoryPath,
-                        final String userDirectoryPath) {
+                        final String rootProjectPath) {
+        GitIndex gitIndex = new GitIndex(gitDirectoryPath);
+        GitObjects gitObjects = new GitObjects(gitDirectoryPath);
 
+        getAllWorkingFiles(rootProjectPath).stream()
+                .map(file -> GitObject.fromWorking(file, rootProjectPath))
+                .forEach(gitObject -> {
+                    gitIndex.update(gitObject);
+                    gitObjects.save(gitObject);
+                });
+
+        gitIndex.saveIndex();
     }
 
-    private void process(String directoryPath) {
+    private List<File> getAllWorkingFiles(final String directoryPath) {
         File[] fileAndDirectories = new File(directoryPath).listFiles();
 
         List<File> files = new ArrayList<>();
@@ -29,5 +42,12 @@ public class GitAddImpl {
                 directories.add(fileAndDirectory);
             }
         }
+
+        directories.forEach(directory -> {
+            List<File> subFiles = getAllWorkingFiles(directory.getAbsolutePath());
+            files.addAll(subFiles);
+        });
+
+        return files;
     }
 }

@@ -16,10 +16,12 @@ public class GitIndex {
     private static final String INDEX_FILE_PATH = "/index";
 
     private final String indexFilePath;
+    private final Index index;
 
     @SneakyThrows
     public GitIndex(final String gitDirectoryPath) {
         this.indexFilePath = gitDirectoryPath + INDEX_FILE_PATH;
+        this.index = getIndex();
     }
 
     @SneakyThrows
@@ -27,10 +29,7 @@ public class GitIndex {
         String workingRelativePath = gitObject.getWorkingRelativePath();
         String sha1 = gitObject.getSha1();
 
-        Index index = getIndex();
-        index.getKeyValuePairs().put(workingRelativePath, sha1);
-
-        saveIndex(index);
+        this.index.getKeyValuePairs().put(workingRelativePath, sha1);
     }
 
     @SneakyThrows
@@ -55,12 +54,12 @@ public class GitIndex {
     }
 
     @SneakyThrows
-    private void saveIndex(final Index index) {
+    public void saveIndex() {
         File indexFile = new File(indexFilePath);
         indexFile.createNewFile();
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(indexFile))) {
-            Map<String, String> keyValuePairs = index.getKeyValuePairs();
+            Map<String, String> keyValuePairs = this.index.getKeyValuePairs();
 
             for (Map.Entry<String, String> entry : keyValuePairs.entrySet()) {
                 String key = entry.getKey();
