@@ -1,16 +1,21 @@
 package org.example.core;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.nio.file.Files;
 
 public class GitRefs {
 
     private static final String HEAD_FILE_PATH = "/HEAD";
+    private static final String REFS_HEADS_DIRECTORY_PATH = "refs/heads";
     private final File headFile;
     private final String gitDirectoryPath;
 
@@ -21,16 +26,40 @@ public class GitRefs {
 
     @SneakyThrows
     public void updateHead(final String sha1) {
+        File currentBranchFile = getCurrentBranchFile();
+        try (FileWriter writer = new FileWriter(currentBranchFile)) {
+            writer.write(sha1);
+        }
+    }
+
+    @SneakyThrows
+    private File getCurrentBranchFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader(headFile))) {
             String firstLine = reader.readLine();
             Head head = new Head(firstLine);
             String branchPath = head.getCurrentBranchPath();
-            File currentBranchFile = new File(gitDirectoryPath + "/" + branchPath);
-
-            try (FileWriter writer = new FileWriter(currentBranchFile)) {
-                writer.write(sha1);
-            }
+            return new File(gitDirectoryPath + "/" + branchPath);
         }
+    }
+
+    @SneakyThrows
+    public void switchBranch(final String branchName) {
+        File branch = new File(gitDirectoryPath + "/" + REFS_HEADS_DIRECTORY_PATH + "/" + branchName);
+        if (!branch.exists()) {
+            System.out.println("branch with name " + branchName + " does not exist");
+        } else {
+            Head head = Head.builder()
+                    .currentBranchPath(REFS_HEADS_DIRECTORY_PATH + "/" + branchName)
+                    .build();
+            Files.write(headFile.toPath(), head.toString().getBytes());
+        }
+    }
+
+    @SneakyThrows
+    public void createNewBranch(final String branchName) {
+        File currentBranchFile = getCurrentBranchFile();
+        File newBranchFile = new File(gitDirectoryPath + "/" + REFS_HEADS_DIRECTORY_PATH + "/" + branchName);
+        Files.copy(currentBranchFile.toPath(), newBranchFile.toPath());
     }
 
     @SneakyThrows
@@ -55,8 +84,12 @@ public class GitRefs {
     }
 
     @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Head {
-        String currentBranchPath;
+        private String currentBranchPath;
+        private String temp;
 
         public Head(final String content) {
             String[] split = content.split(": ");
