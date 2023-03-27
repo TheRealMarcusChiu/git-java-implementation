@@ -4,9 +4,9 @@ import org.example.core.GitRefs;
 
 public class GitBranch {
 
-    public void process(final String gitDirectoryPath,
-                        final String branchName) {
+    public void process(final String gitDirectoryPath) {
         GitRefs gitRefs = new GitRefs(gitDirectoryPath);
-        gitRefs.createNewBranch(branchName);
+        String currentBranchName = gitRefs.getCurrentBranchName();
+        System.out.println("You are currently on branch '" + currentBranchName + "'");
     }
 }

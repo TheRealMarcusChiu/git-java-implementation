@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.commands.GitAdd;
 import org.example.commands.GitBranch;
+import org.example.commands.GitBranchCreate;
 import org.example.commands.GitCheckout;
 import org.example.commands.GitCommit;
 import org.example.commands.GitInit;
@@ -26,8 +27,12 @@ public class Main {
         } else if ("commit".equals(arg1)) {
             new GitCommit().process(GIT_DIRECTORY_PATH);
         } else if ("branch".equals(arg1)) {
-            String arg2 = args[1];
-            new GitBranch().process(GIT_DIRECTORY_PATH, arg2);
+            if (args.length == 1) {
+                new GitBranch().process(GIT_DIRECTORY_PATH);
+            } else if (args.length == 2) {
+                String arg2 = args[1];
+                new GitBranchCreate().process(GIT_DIRECTORY_PATH, arg2);
+            }
         } else if ("checkout".equals(arg1)) {
             String arg2 = args[1];
             new GitCheckout().process(GIT_DIRECTORY_PATH, arg2);

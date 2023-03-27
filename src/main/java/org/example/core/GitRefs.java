@@ -3,7 +3,6 @@ package org.example.core;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 
 import java.io.BufferedReader;
@@ -34,12 +33,9 @@ public class GitRefs {
 
     @SneakyThrows
     private File getCurrentBranchFile() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(headFile))) {
-            String firstLine = reader.readLine();
-            Head head = new Head(firstLine);
-            String branchPath = head.getCurrentBranchPath();
-            return new File(gitDirectoryPath + "/" + branchPath);
-        }
+        Head head = new Head(headFile);
+        String branchPath = head.getCurrentBranchPath();
+        return new File(gitDirectoryPath + "/" + branchPath);
     }
 
     @SneakyThrows
@@ -54,6 +50,10 @@ public class GitRefs {
             Files.write(headFile.toPath(), head.toString().getBytes());
             return true;
         }
+    }
+
+    public String getCurrentBranchName() {
+        return new Head(headFile).getCurrentBranchName();
     }
 
     @SneakyThrows
@@ -78,7 +78,7 @@ public class GitRefs {
     }
 
     @SneakyThrows
-    private String getFirstLine(final File file) {
+    private static String getFirstLine(final File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             return reader.readLine();
         }
@@ -87,14 +87,25 @@ public class GitRefs {
     @Data
     @Builder
     @AllArgsConstructor
-    @NoArgsConstructor
     public static class Head {
         private String currentBranchPath;
+        private String currentBranchName;
         private String temp;
 
+        public Head(final File headFile) {
+            String firstLine = getFirstLine(headFile);
+            process(firstLine);
+        }
+
         public Head(final String content) {
+            process(content);
+        }
+
+        private void process(final String content) {
             String[] split = content.split(": ");
             currentBranchPath = split[1];
+            int lastCommaIndex = currentBranchPath.lastIndexOf("/");
+            currentBranchName = currentBranchPath.substring(lastCommaIndex + 1);
         }
 
         public String toString() {
