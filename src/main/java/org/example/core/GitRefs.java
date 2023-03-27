@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.Optional;
 
 public class GitRefs {
 
@@ -35,7 +34,7 @@ public class GitRefs {
     }
 
     @SneakyThrows
-    public String getCurrentSha1() {
+    public String getCurrentCommitSha1() {
         String firstLine = getFirstLine(headFile);
         Head head = new Head(firstLine);
         String branchPath = head.getCurrentBranchPath();

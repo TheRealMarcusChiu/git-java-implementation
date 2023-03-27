@@ -13,8 +13,8 @@ public class Main {
     public static final String GIT_DIRECTORY_PATH = System.getProperty("user.dir") + "/" + GIT_REPO_NAME;
 
     public static void main(String[] args) throws IOException {
-//        String arg = args[0];
-        String arg = "commit";
+        String arg = args[0];
+//        String arg = "commit";
 
         if ("init".equals(arg)) {
             new GitInit().init(GIT_DIRECTORY_PATH);

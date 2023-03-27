@@ -2,10 +2,14 @@ package org.example.core;
 
 import lombok.SneakyThrows;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class GitObjects {
@@ -37,6 +41,40 @@ public class GitObjects {
         File file = new File(filePath);
         try (FileWriter writer = new FileWriter(file)) {
             writer.write(content);
+        }
+    }
+
+    public Optional<GitCommitObject> findGitCommitObject(final String sha1) {
+        GitCommitObject gitCommitObject = null;
+
+        String firstPart = sha1.substring(0, 2);
+        String secondPart = sha1.substring(2);
+
+        String directoryPath = objectsDirectoryPath + "/" + firstPart;
+        String filePath = directoryPath + "/" + secondPart;
+
+        File directory = new File(directoryPath);
+        if (directory.exists() && directory.isDirectory()) {
+            File file = new File(filePath);
+            if (file.exists() && file.isFile()) {
+                List<String> lines = getLines(file);
+                gitCommitObject = new GitCommitObject(lines);
+            }
+        }
+
+        return Optional.ofNullable(gitCommitObject);
+    }
+
+    @SneakyThrows
+    private List<String> getLines(final File file) {
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line = reader.readLine();
+            while (line != null) {
+                lines.add(line);
+                line = reader.readLine();
+            }
+            return lines;
         }
     }
 
