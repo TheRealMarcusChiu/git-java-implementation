@@ -8,6 +8,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -17,6 +20,24 @@ public class GitIndex {
 
     private final String indexFilePath;
     private final Index index;
+
+    public GitTreeNode getTreeRoot() {
+        GitTreeNode rootTree = GitTreeNode.builder()
+                .entryName("root")
+                .entryType(GitTreeNode.EntryType.TREE)
+                .entryPermissions(null)
+                .entrySha1(null)
+                .build();
+
+        this.index.keyValuePairs.forEach((key, value) -> {
+            List<String> files = new ArrayList<>(Arrays.asList(key.split("/")));
+            rootTree.add(files, value);
+        });
+
+        rootTree.computeSha1();
+
+        return rootTree;
+    }
 
     @SneakyThrows
     public GitIndex(final String gitDirectoryPath) {

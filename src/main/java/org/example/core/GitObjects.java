@@ -3,6 +3,7 @@ package org.example.core;
 import lombok.SneakyThrows;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -15,6 +16,28 @@ public class GitObjects {
 
     public GitObjects(final String gitDirectoryPath) {
         this.objectsDirectoryPath = gitDirectoryPath + OBJECTS_DIRECTORY_PATH;
+    }
+
+    @SneakyThrows
+    public void save(final GitObjectI gitObjectI) {
+        String sha1 = gitObjectI.getSha1();
+        String content = gitObjectI.getContent();
+
+        if (findBySha1(sha1).isPresent()) {
+            return;
+        }
+
+        String firstPart = sha1.substring(0, 2);
+        String secondPart = sha1.substring(2);
+
+        String directoryPath = objectsDirectoryPath + "/" + firstPart;
+        String filePath = directoryPath + "/" + secondPart;
+
+        Files.createDirectories(Paths.get(directoryPath));
+        File file = new File(filePath);
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write(content);
+        }
     }
 
     public Optional<GitObject> findBySha1(final String sha1) {
@@ -35,23 +58,5 @@ public class GitObjects {
         }
 
         return Optional.ofNullable(gitObject);
-    }
-
-    @SneakyThrows
-    public void save(final GitObject gitObject) {
-        if (findBySha1(gitObject.getSha1()).isPresent()) {
-            return;
-        }
-
-        String sha1 = gitObject.getSha1();
-
-        String firstPart = sha1.substring(0, 2);
-        String secondPart = sha1.substring(2);
-
-        String directoryPath = objectsDirectoryPath + "/" + firstPart;
-        String filePath = directoryPath + "/" + secondPart;
-
-        Files.createDirectories(Paths.get(directoryPath));
-        Files.copy(gitObject.getFile().toPath(), Paths.get(filePath));
     }
 }

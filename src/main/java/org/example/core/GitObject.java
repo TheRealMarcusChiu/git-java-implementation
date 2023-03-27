@@ -10,7 +10,7 @@ import java.util.Comparator;
 
 @Data
 @NoArgsConstructor
-public class GitObject {
+public class GitObject implements GitObjectI {
 
     public static final Comparator<GitObject> BY_WORKING_RELATIVE_PATH = Comparator.comparing(
             GitObject::getWorkingRelativePath,
@@ -27,7 +27,7 @@ public class GitObject {
                                         final String rootProjectPath) {
         GitObject gitObject = new GitObject();
 
-        String relativePath = workingFile.getAbsolutePath().replace(rootProjectPath, "");
+        String relativePath = workingFile.getAbsolutePath().replace(rootProjectPath + "/", "");
         byte[] byteArray = Files.readAllBytes(workingFile.toPath());
         String sha1 = GitSha1.toSHA1(byteArray);
 
@@ -47,5 +47,11 @@ public class GitObject {
         gitObject.setSha1(sha1);
 
         return gitObject;
+    }
+
+    @Override
+    @SneakyThrows
+    public String getContent() {
+        return new String(Files.readAllBytes(file.toPath()));
     }
 }
