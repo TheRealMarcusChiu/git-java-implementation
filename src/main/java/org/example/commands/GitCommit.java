@@ -27,21 +27,22 @@ public class GitCommit {
         }
 
         if (treeRoot.getEntrySha1().equals(currentTreeRootSha1)) {
-            System.out.println("");
+            System.out.println("Everything up to date!");
+        } else {
+            saveTreeNodes(treeRoot, gitObjects);
+
+            String treeRootSha1 = treeRoot.getEntrySha1();
+            String previousCommit = gitRefs.getCurrentCommitSha1();
+            GitCommitObject gitCommitObject = GitCommitObject.builder()
+                    .treeRootSha1(treeRootSha1)
+                    .previousCommit(previousCommit)
+                    .author("Marcus, Chiu")
+                    .localDateTime(LocalDateTime.now())
+                    .build();
+            gitObjects.save(gitCommitObject);
+
+            gitRefs.updateHead(gitCommitObject.getSha1());
         }
-        saveTreeNodes(treeRoot, gitObjects);
-
-        String treeRootSha1 = treeRoot.getEntrySha1();
-        String previousCommit = gitRefs.getCurrentCommitSha1();
-        GitCommitObject gitCommitObject = GitCommitObject.builder()
-                .treeRootSha1(treeRootSha1)
-                .previousCommit(previousCommit)
-                .author("Marcus, Chiu")
-                .localDateTime(LocalDateTime.now())
-                .build();
-        gitObjects.save(gitCommitObject);
-
-        gitRefs.updateHead(gitCommitObject.getSha1());
     }
 
     @SneakyThrows

@@ -45,6 +45,10 @@ public class GitObjects {
     }
 
     public Optional<GitCommitObject> findGitCommitObject(final String sha1) {
+        if (sha1 == null || "null".equals(sha1)) {
+            return Optional.empty();
+        }
+
         GitCommitObject gitCommitObject = null;
 
         String firstPart = sha1.substring(0, 2);

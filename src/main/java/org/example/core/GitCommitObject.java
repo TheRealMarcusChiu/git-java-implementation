@@ -1,7 +1,9 @@
 package org.example.core;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -9,6 +11,8 @@ import java.util.List;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class GitCommitObject implements GitObjectI {
     private String treeRootSha1;
     private String previousCommit;
