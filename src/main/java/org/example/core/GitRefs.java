@@ -43,15 +43,16 @@ public class GitRefs {
     }
 
     @SneakyThrows
-    public void switchBranch(final String branchName) {
+    public boolean switchBranch(final String branchName) {
         File branch = new File(gitDirectoryPath + "/" + REFS_HEADS_DIRECTORY_PATH + "/" + branchName);
         if (!branch.exists()) {
-            System.out.println("branch with name " + branchName + " does not exist");
+            return false;
         } else {
             Head head = Head.builder()
                     .currentBranchPath(REFS_HEADS_DIRECTORY_PATH + "/" + branchName)
                     .build();
             Files.write(headFile.toPath(), head.toString().getBytes());
+            return true;
         }
     }
 
