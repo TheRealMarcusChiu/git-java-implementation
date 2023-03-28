@@ -116,7 +116,11 @@ public class GitCheckout {
             GitTreeNode bEntry = branchCopy.getEntries().get(entryName);
 
             if (wEntry != null && bEntry != null) {
-                update(wEntry, bEntry, currentPath, gitObjects);
+                if (bEntry.getEntryType().equals(TREE)) {
+                    update(wEntry, bEntry, currentPath + entryName + "/", gitObjects);
+                } else {
+                    update(wEntry, bEntry, currentPath, gitObjects);
+                }
             } else if (wEntry == null && bEntry != null) {
                 // create copy of bEntry onto working-copy
                 if (TREE.equals(bEntry.getEntryType())) {

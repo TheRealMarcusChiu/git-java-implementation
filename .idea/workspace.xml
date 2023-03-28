@@ -60,7 +60,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="git-implementation" />
-      <option name="PROGRAM_PARAMETERS" value="add" />
+      <option name="PROGRAM_PARAMETERS" value="checkout second" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.commands.*" />
@@ -92,9 +92,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/commands/GitAdd.java</url>
-          <line>11</line>
-          <option name="timeStamp" value="31" />
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/commands/GitCheckout.java</url>
+          <line>158</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/commands/GitCheckout.java</url>
+          <line>117</line>
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
