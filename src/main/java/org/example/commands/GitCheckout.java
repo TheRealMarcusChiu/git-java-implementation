@@ -82,7 +82,7 @@ public class GitCheckout {
             } else if (BLOB.equals(workinCopy.getEntryType()) && TREE.equals(branchCopy.getEntryType())) {
                 File workinFile = new File(currentPath + workinCopy.getEntryName());
                 // delete workingCopy's file
-                workinFile.delete();
+                Files.deleteIfExists(workinFile.toPath());
                 // create branchCopy's directory empty
                 // create all other files underneath it
                 createDirectoryAndContentsRecursively(workinCopy.getEntryName(),
@@ -136,7 +136,7 @@ public class GitCheckout {
                 // delete wEntry
                 if (wEntry.getEntryType().equals(BLOB)) {
                     File workinFile = new File(currentPath + entryName);
-                    workinFile.delete();
+                    Files.deleteIfExists(workinFile.toPath());
                 } else {
                     File workingDirectory = new File(currentPath + entryName);
                     deleteDirectory(workingDirectory);
