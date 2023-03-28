@@ -45,6 +45,10 @@ public class GitIndex {
         this.index = getIndex();
     }
 
+    public void clearIndex() {
+        this.index.getKeyValuePairs().clear();
+    }
+
     @SneakyThrows
     public void update(final GitObject gitObject) {
         String workingRelativePath = gitObject.getWorkingRelativePath();

@@ -13,6 +13,8 @@ public class GitAdd {
         GitObjects gitObjects = new GitObjects(gitDirectoryPath);
         GitWorkingCopy gitWorkingCopy = new GitWorkingCopy();
 
+        // similar to `git add .`
+        gitIndex.clearIndex();
         gitWorkingCopy.getAllWorkingFiles(rootProjectPath).stream()
                 .map(file -> GitObject.fromWorking(file, rootProjectPath))
                 .forEach(gitObject -> {
