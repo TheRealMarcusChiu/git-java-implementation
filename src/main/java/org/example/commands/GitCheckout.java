@@ -25,6 +25,7 @@ import static org.example.core.GitTreeNode.EntryType.TREE;
 public class GitCheckout {
 
     public void process(final String gitDirectoryPath,
+                        final String rootProjectPath,
                         final String branchName) {
         GitRefs gitRefs = new GitRefs(gitDirectoryPath);
         boolean response = gitRefs.switchBranch(branchName);
@@ -34,6 +35,8 @@ public class GitCheckout {
 
             GitObjects gitObjects = new GitObjects(gitDirectoryPath);
             update(workingCopyTreeNode, branchCopyTreeNode, "", gitObjects);
+
+            new GitAdd().process(gitDirectoryPath, rootProjectPath);
 
             System.out.println("Switched to branch '" + branchName + "'");
         } else {
