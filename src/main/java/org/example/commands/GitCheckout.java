@@ -127,7 +127,7 @@ public class GitCheckout {
                             gitObjects);
                 } else {
                     // create file
-                    File branchFile = gitObjects.findBySha1(branchCopy.getSha1()).get().getFile();
+                    File branchFile = gitObjects.findBySha1(bEntry.getSha1()).get().getFile();
                     File workinFile = new File(currentPath + entryName);
                     // update workingCopy file contents as copy of branchCopy
                     Files.copy(branchFile.toPath(), workinFile.toPath());
