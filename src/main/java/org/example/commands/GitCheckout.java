@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.example.core.GitTreeNode.EntryType.BLOB;
 import static org.example.core.GitTreeNode.EntryType.TREE;
 
@@ -74,7 +75,7 @@ public class GitCheckout {
                 File branchFile = gitObjects.findBySha1(branchCopy.getSha1()).get().getFile();
                 File workinFile = new File(currentPath + workinCopy.getEntryName());
                 // update workingCopy file contents as copy of branchCopy
-                Files.copy(branchFile.toPath(), workinFile.toPath());
+                Files.copy(branchFile.toPath(), workinFile.toPath(), REPLACE_EXISTING);
             } else if (BLOB.equals(workinCopy.getEntryType()) && TREE.equals(branchCopy.getEntryType())) {
                 File workinFile = new File(currentPath + workinCopy.getEntryName());
                 // delete workingCopy's file
