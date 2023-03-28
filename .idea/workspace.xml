@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c190c096-d390-4530-9005-5588205e2478" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/commands/GitCheckout.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/commands/GitCheckout.java" afterDir="false" />
-    </list>
+    <list default="true" id="c190c096-d390-4530-9005-5588205e2478" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,7 +58,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="git-implementation" />
-      <option name="PROGRAM_PARAMETERS" value="checkout master" />
+      <option name="PROGRAM_PARAMETERS" value="checkout second" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.commands.*" />
@@ -92,11 +89,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/commands/GitCheckout.java</url>
-          <line>117</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/commands/GitCheckout.java</url>
           <line>36</line>
