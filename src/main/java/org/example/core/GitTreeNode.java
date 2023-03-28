@@ -1,5 +1,6 @@
 package org.example.core;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,8 +11,10 @@ import java.util.stream.Collectors;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class GitTreeNode implements GitObjectI {
 
+    private static final String ENTRY_DELIMITER = " ";
     private String entryPermissions;
     private EntryType entryType;
     private String entrySha1;
@@ -40,14 +43,21 @@ public class GitTreeNode implements GitObjectI {
         }
     }
 
+    public GitTreeNode(final String line) {
+        String[] strings = line.split(ENTRY_DELIMITER);
+        this.setEntryType(EntryType.valueOf(strings[0]));
+        this.setEntrySha1(strings[1]);
+        this.setEntryName(strings[2]);
+    }
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
         for (GitTreeNode entry : entries.values()) {
             str.append(entry.getEntryType())
-                    .append(" ")
+                    .append(ENTRY_DELIMITER)
                     .append(entry.getEntrySha1())
-                    .append(" ")
+                    .append(ENTRY_DELIMITER)
                     .append(entry.getEntryName())
                     .append("\n");
         }

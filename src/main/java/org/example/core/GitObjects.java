@@ -10,7 +10,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+
+import static java.util.stream.Collectors.toMap;
 
 public class GitObjects {
 
@@ -42,6 +46,36 @@ public class GitObjects {
         try (FileWriter writer = new FileWriter(file)) {
             writer.write(content);
         }
+    }
+
+    public GitTreeNode findGitTreeNodeRoot(final String sha1) {
+        final GitTreeNode gitTreeNode = GitTreeNode.builder().build();
+
+        String firstPart = sha1.substring(0, 2);
+        String secondPart = sha1.substring(2);
+
+        String directoryPath = objectsDirectoryPath + "/" + firstPart;
+        String filePath = directoryPath + "/" + secondPart;
+
+        File directory = new File(directoryPath);
+        if (directory.exists() && directory.isDirectory()) {
+            File file = new File(filePath);
+            if (file.exists() && file.isFile()) {
+                List<String> lines = getLines(file);
+                Map<String, GitTreeNode> entries = lines.stream()
+                        .map(GitTreeNode::new)
+                        .collect(toMap(GitTreeNode::getEntryName, Function.identity()));
+                entries.values().forEach(entry -> {
+                    if (entry.getEntryType().equals(GitTreeNode.EntryType.TREE)) {
+                        GitTreeNode gtn = findGitTreeNodeRoot(entry.getSha1());
+                        gtn.getEntries().forEach((name, e) -> entry.getEntries().put(name, e));
+                    }
+                });
+                entries.forEach((key, value) -> gitTreeNode.getEntries().put(key, value));
+            }
+        }
+
+        return gitTreeNode;
     }
 
     public Optional<GitCommitObject> findGitCommitObject(final String sha1) {
