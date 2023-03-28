@@ -35,7 +35,7 @@ public class Main {
         } else if ("checkout".equals(arg1)) {
             String arg2 = args[1];
 //            String arg2 = "second";
-            new GitCheckout().process(GIT_DIRECTORY_PATH, arg2, USER_DIRECTORY_PATH);
+            new GitCheckout().process(GIT_DIRECTORY_PATH, USER_DIRECTORY_PATH, arg2);
         }
     }
 }
