@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -75,6 +76,18 @@ public class GitObjects {
             }
         }
 
+        if (gitTreeNode.getEntryType() == null) { // Then this is the root
+            gitTreeNode.setEntryType(GitTreeNode.EntryType.TREE);
+
+            // Set SHA1
+            List<String> sha1s = gitTreeNode.getEntries().values().stream().map(GitTreeNode::getEntrySha1)
+                    .collect(Collectors.toList());
+            StringBuilder result = new StringBuilder();
+            for (String s : sha1s) {
+                result.append(s);
+            }
+            gitTreeNode.setEntrySha1(GitSha1.toSHA1(result.toString().getBytes()));
+        }
         return gitTreeNode;
     }
 
