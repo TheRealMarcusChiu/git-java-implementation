@@ -134,8 +134,13 @@ public class GitCheckout {
                 }
             } else if (wEntry != null && bEntry == null) {
                 // delete wEntry
-                File workinFile = new File(currentPath + entryName);
-                workinFile.delete();
+                if (wEntry.getEntryType().equals(BLOB)) {
+                    File workinFile = new File(currentPath + entryName);
+                    workinFile.delete();
+                } else {
+                    File workingDirectory = new File(currentPath + entryName);
+                    deleteDirectory(workingDirectory);
+                }
             }
         }
     }
