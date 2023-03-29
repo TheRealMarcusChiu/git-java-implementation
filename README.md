@@ -1,7 +1,8 @@
-Execute the following commands
+Build JAR
 ```shell
 mvn clean package
 ```
+Execute the following commands
 ```shell
 java -jar ./target/git-implementation-1.0-SNAPSHOT.jar init
 java -jar ./target/git-implementation-1.0-SNAPSHOT.jar add
